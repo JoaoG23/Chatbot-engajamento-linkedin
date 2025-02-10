@@ -68,7 +68,8 @@ def comment_in_post_by_limit(driver, limit_comments):
         content_in_post = get_content_in_the_post(post)
         comment_created = 'Que shoow!'
     
-        fill_comment_input_and_send(driver, post, comment_created,i)  
+        fill_comment_input_and_send(driver, post, comment_created,i)
+        write_to_log(f"Comentário: {comment_created} - Postagem: {content_in_post}")
         
         quantity_posts_comments += 1
 
