@@ -32,7 +32,7 @@ def create_comment_based_post(content_post):
                 "role": "user",
                 "parts": [
                     {
-                        "text": f"Postagem: {content_post}"
+                        "text": f"Postagem: (({content_post}))"
                     }
                 ]
             }
