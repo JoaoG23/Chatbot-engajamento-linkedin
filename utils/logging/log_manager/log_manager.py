@@ -3,7 +3,7 @@ import os
 from logging.handlers import RotatingFileHandler
 
 # Configuração do logger
-logger = logging.getLogger('automation-to-send-curriculum-web')
+logger = logging.getLogger('Chatbot-engajamento-linkedin')
 logger.setLevel(logging.INFO)
 
 

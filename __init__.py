@@ -1,6 +1,5 @@
 
 import os
-from time import sleep
 import traceback
 
 from dotenv import load_dotenv
@@ -29,6 +28,7 @@ load_dotenv()
     
 if __name__ == '__main__':
     try:
+        driver.implicitly_wait(15)
         driver.maximize_window()
         
         user_login = {
@@ -40,7 +40,6 @@ if __name__ == '__main__':
             'description': os.getenv("DESCRIPTION"),
             'location': os.getenv("LOCATION")
         }
-        # sleep(11)
         
         search_posts_and_comment(driver, search_data_people)
    

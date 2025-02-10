@@ -25,5 +25,5 @@ def do_login(driver, login_data):
     sleep(2)
     login_button = driver.find_element(By.XPATH, '//*[@id="organic-div"]/form/div[4]/button')
     login_button.click()
-    sleep(1)
+    sleep(10)
     

@@ -2,6 +2,7 @@
 
 🧲Desenvolver um bot de engajamento para o LinkedIn que funcione da seguinte forma: ao inserir um nome na barra de pesquisa, o sistema acessará as publicações, analisará o conteúdo com base em um prompt e, automaticamente, adicionará um comentário curto (máximo de 80 caracteres) e um 'gostei' 👍🏽
 
+Tempo de desenvolvimento: 9
 🛠 Tecnologias:
 
 ✅ Selenium – Para navegar pelo LinkedIn e interagir com as postagens.
@@ -12,16 +13,20 @@
 
 🔧 Passos para o funcionamento do bot:
 
-[x] Login no LinkedIn – O bot precisa acessar sua conta (pode usar autenticação manual ou cookies salvos).
 
-[x] Pesquisa pelo nome – O sistema faz uma busca pelo nome na barra de pesquisa.
+[x] 1. Acessar tela de login e preencher usuário e senha;
 
-[x] Acessa as postagens – Abre cada postagem.
+[x] 2. Preencher a barra de pesquisa com a (__descrição__) buscada;
 
-[] Analisa o conteúdo – Extrai o texto da publicação.
+[x] 3. Entrar em cada postagem capturar o **texto** dela com o assunto;
 
-[] Gera um comentário curto – Usa a OpenAI API para criar um comentário de até 80 caracteres.
+[] 4. Enviar para **AI Gemini**, com o prompt requirido;
 
-[x] Publica o comentário – Escreve o comentário e envia.
+[] 5. Capturar a resposta **AI Gemini**;
 
-[] Dá um ‘gostei’ – Clica no botão de ‘curtir’ na postagem.
+[x] 6. Preencher o comentário com base na resposta do **AI Gemini**;
+
+[x] 7. Enviar comentário;
+
+[] 8. Inserir **postagem** e **comentário** nos logs para controle;
+
