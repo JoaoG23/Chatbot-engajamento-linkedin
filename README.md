@@ -44,7 +44,6 @@
 3. Configure as variáveis de ambiente no arquivo `.env`:
 
 ```
-DESCRIPTION="sobre spring boot" # O que será pesquisado
 USER_LINKEDIN="email@emai.com" 
 PASSWORD_LINKEDIN="2393932" 
 COMMENT_LIMIT=10 # Limite de conexoes
@@ -55,6 +54,7 @@ AI_TOKEN='token' # token do gemini
 
 ## 4. Como Usar 😃
 
+0. Digite qual o tema gostaria de pesquisar `ex: sobre python, clear arch...`
 1. Acesse o LinkedIn e faça login com um usuário válido;
 2. No terminal, insira a palavra-chave desejada para busca;
 3. O bot navegará automaticamente, curtindo e comentando nas postagens até o limite estabelecido na variavel `COMMENT_LIMIT=10`;
