@@ -11,6 +11,14 @@ from utils.remove_linebreak_text.remove_linebreak_text import remove_linebreak_t
 
 SCROLL_PAUSE_TIME = 20
 
+def give_like_in_post(post):
+    sleep(3)
+    like_button = WebDriverWait(post, SCROLL_PAUSE_TIME).until(
+        EC.element_to_be_clickable((By.XPATH, './/*[@aria-label="Reagir com gostei"]'))
+    )
+    like_button.click()
+    sleep(3)
+
 def get_content_in_the_post(post):
     try:
         more_content_button = WebDriverWait(post, SCROLL_PAUSE_TIME).until(
@@ -41,7 +49,7 @@ def fill_comment_input_and_send(driver, post, content_post, quantity_posts_comme
     sleep(2)
     send_button = driver.find_element(By.CSS_SELECTOR, '.comments-comment-box__submit-button--cr.artdeco-button.artdeco-button--1.artdeco-button--primary.ember-view')
     send_button.click()
-    sleep(7)
+    sleep(5)
 
 
 def comment_in_post_by_limit(driver, limit_comments):
@@ -55,9 +63,11 @@ def comment_in_post_by_limit(driver, limit_comments):
     
     quantity_posts_comments = 0
     
-    for i in range(limit_comments): 
+    for i in range((limit_comments - 1)): 
         post = posts[i]
         sleep(6)
+        give_like_in_post(post)
+        
         content_in_post = get_content_in_the_post(post)
         comment_created = create_comment_based_post(content_in_post)
         comment_without_emoji = remove_linebreak_text(comment_created)

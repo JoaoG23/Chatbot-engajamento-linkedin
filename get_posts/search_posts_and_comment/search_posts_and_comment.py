@@ -17,7 +17,7 @@ def search_posts_and_comment(driver, information_people):
     
     description_encoded = encode_message_for_url(description_people)
     sleep(5)
-    driver.get(f'https://www.linkedin.com/search/results/content/?keywords={description_encoded}')
+    driver.get(f'https://www.linkedin.com/search/results/content/?datePosted="past-week"&keywords={description_encoded}')
     sleep(10)
     
     limit_comments = int(os.getenv("COMMENT_LIMIT"))
