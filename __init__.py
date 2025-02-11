@@ -38,8 +38,9 @@ if __name__ == '__main__':
         do_login(driver, user_login)
         search_data_people = {
             'description': os.getenv("DESCRIPTION"),
-            'location': os.getenv("LOCATION")
         }
+        
+        input("Pressione Enter para continuar...")
         
         search_posts_and_comment(driver, search_data_people)
    
