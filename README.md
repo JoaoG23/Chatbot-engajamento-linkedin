@@ -8,6 +8,7 @@
 
 **Automatização** 🤖
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 [![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)](https://www.selenium.dev/)
 [![GeminiAI](https://img.shields.io/badge/GeminiAI-FF6600?style=for-the-badge&logo=ai&logoColor=white)]()
 ![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue?style=for-the-badge&logo=google-chrome)
