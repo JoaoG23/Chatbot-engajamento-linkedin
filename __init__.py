@@ -28,6 +28,17 @@ load_dotenv()
     
 if __name__ == '__main__':
     try:
+        print("********************************")
+        print("*                              *")
+        print("*       BEM-VINDO(A)!          *")
+        print("*  Bot Engajamento linkedin    *")
+        print("********************************")
+        print("")
+        print("Este um Bot de automação para comentar em posts do LinkedIn.")
+        print("Esperamos que você aproveite!")
+        print("e Um beijo na sua bundinha!....😁")
+
+        search_information_input = input("Digite o que deseja buscar no LinkedIn: ex: sobre python, sobre automação, etc. \n")
         driver.implicitly_wait(15)
         driver.maximize_window()
         
@@ -36,13 +47,8 @@ if __name__ == '__main__':
             'password': os.getenv("PASSWORD_LINKEDIN")
         }
         do_login(driver, user_login)
-        search_data_people = {
-            'description': os.getenv("DESCRIPTION"),
-        }
         
-        input("Pressione Enter para continuar...")
-        
-        search_posts_and_comment(driver, search_data_people)
+        search_posts_and_comment(driver, search_information_input)
    
     except WebDriverException as e:
         write_to_log(f"WebDriverException: {traceback.format_exc()}", type='error')
