@@ -8,6 +8,7 @@ logger.setLevel(logging.INFO)
 
 
 log_automation_path = os.path.join(os.getcwd(), 'logs', 'logs.log')
+os.makedirs('logs', exist_ok=True)
 
 # Configuração do manipulador de rotação de arquivos
 handler = RotatingFileHandler(log_automation_path, maxBytes=5*1024*1024, backupCount=3)  # 5MB por arquivo, até 3 backups
