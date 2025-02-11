@@ -27,8 +27,8 @@ def comment_in_post_by_limit(driver, limit_comments):
     if is_posts_empty:
         return 'Nenhum post encontrado tente outra busca'
     
-    is_posts_more_less_than_limit_comments = len(posts) < limit_comments
-    if is_posts_more_less_than_limit_comments:
+    is_posts_less_than_limit_comments = len(posts) < limit_comments
+    if is_posts_less_than_limit_comments:
         limit_comments = len(posts)
     
     for i in range(limit_comments): 
