@@ -43,11 +43,11 @@
 3. Configure as variáveis de ambiente no arquivo `.env`:
 
 ```
-DESCRIPTION="sobre spring boot"
+DESCRIPTION="sobre spring boot" # O que será pesquisado
 USER_LINKEDIN="email@emai.com" 
 PASSWORD_LINKEDIN="2393932" 
 COMMENT_LIMIT=10 # Limite de conexoes
-AI_TOKEN='token'
+AI_TOKEN='token' # token do gemini
 ```
 
 4. Execute o bot com `python __init__.py`.
