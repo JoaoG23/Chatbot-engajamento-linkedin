@@ -19,4 +19,4 @@ def fill_comment_input_and_send(driver, post, content_post, quantity_posts_comme
     sleep(2)
     send_button = driver.find_element(By.CSS_SELECTOR, '.comments-comment-box__submit-button--cr.artdeco-button.artdeco-button--1.artdeco-button--primary.ember-view')
     send_button.click()
-    sleep(5)
+    sleep(7)
