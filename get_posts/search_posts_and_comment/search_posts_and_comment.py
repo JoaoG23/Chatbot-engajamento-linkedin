@@ -11,14 +11,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
     
-def search_posts_and_comment(driver, information_people):
+def search_posts_and_comment(driver, information_searched):
 
-    description_people = information_people['description']
-    
-    description_encoded = encode_message_for_url(description_people)
+    description_encoded = encode_message_for_url(information_searched)
     sleep(5)
-    driver.get(f'https://www.linkedin.com/search/results/content/?datePosted="past-week"&keywords={description_encoded}')
-    sleep(10)
+    driver.get(f'https://www.linkedin.com/search/results/content/?datePosted="past-24h"&keywords={description_encoded}')
+    sleep(12)
     
     limit_comments = int(os.getenv("COMMENT_LIMIT"))
     

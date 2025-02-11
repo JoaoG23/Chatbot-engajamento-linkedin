@@ -43,7 +43,7 @@ def create_comment_based_post(content_post):
         }
     }
     try:
-        response = requests.post(URL, headers=headers, json=payload, timeout=60)
+        response = requests.post(URL, headers=headers, json=payload, timeout=140)
         response.raise_for_status()  # Lança exceção para status 4xx/5xx
         
         if response.status_code == 200:
