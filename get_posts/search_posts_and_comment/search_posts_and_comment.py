@@ -25,7 +25,7 @@ def search_posts_and_comment(driver, information_people):
     scroll_by_limit_comments(driver, limit_comments)
     
     driver.execute_script("window.scrollTo(0, 0);")
-    sleep(6)
+    sleep(7)
     
     comment_in_post_by_limit(driver, limit_comments)
         

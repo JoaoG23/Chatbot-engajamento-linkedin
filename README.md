@@ -20,13 +20,13 @@ Tempo de desenvolvimento: 10
 
 [x] 3. Entrar em cada postagem capturar o **texto** dela com o assunto;
 
-[] 4. Enviar para **AI Gemini**, com o prompt requirido;
+[x] 4. Enviar para **AI Gemini**, com o prompt requirido;
 
-[] 5. Capturar a resposta **AI Gemini**;
+[x] 5. Capturar a resposta **AI Gemini**;
 
 [x] 6. Preencher o comentário com base na resposta do **AI Gemini**;
 
 [x] 7. Enviar comentário;
 
-[] 8. Inserir **postagem** e **comentário** nos logs para controle;
+[x] 8. Inserir **postagem** e **comentário** nos logs para controle;
 

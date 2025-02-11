@@ -1,1 +1,12 @@
-2025-02-10 18:08:31,767 - automation-to-send-curriculum-web - INFO - Total de comentários: 8
+2025-02-10 21:33:36,997 - Chatbot-engajamento-linkedin - ERROR - Exception: Traceback (most recent call last):
+  File "c:\github\joaoG23\pessoal\Chatbot-engajamento-linkedin\__init__.py", line 44, in <module>
+    search_posts_and_comment(driver, search_data_people)
+  File "c:\github\joaoG23\pessoal\Chatbot-engajamento-linkedin\get_posts\search_posts_and_comment\search_posts_and_comment.py", line 30, in search_posts_and_comment
+    comment_in_post_by_limit(driver, limit_comments)
+  File "c:\github\joaoG23\pessoal\Chatbot-engajamento-linkedin\get_posts\comment_in_post_by_limit\comment_in_post_by_limit.py", line 66, in comment_in_post_by_limit
+    fill_comment_input_and_send(driver, post, comment_without_emoji_and_linebreak,i)
+  File "c:\github\joaoG23\pessoal\Chatbot-engajamento-linkedin\get_posts\comment_in_post_by_limit\comment_in_post_by_limit.py", line 39, in fill_comment_input_and_send
+    comment_inputs[quantity_posts_comments].send_keys(content_post)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+IndexError: list index out of range
+
