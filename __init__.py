@@ -37,8 +37,8 @@ if __name__ == '__main__':
         print("Este um Bot de automação para comentar em posts do LinkedIn.")
         print("Esperamos que você aproveite!")
         print("e Um beijo na sua bundinha!....😁")
-
         search_information_input = input("Digite o que deseja buscar no LinkedIn: ex: sobre python, sobre automação, etc. \n")
+
         driver.implicitly_wait(15)
         driver.maximize_window()
         
