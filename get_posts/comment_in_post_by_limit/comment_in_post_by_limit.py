@@ -37,6 +37,7 @@ def comment_in_post_by_limit(driver, limit_comments):
         give_like_in_post(post)
         
         content_in_post = get_content_in_the_post(post)
+        sleep(10)
         comment_created = create_comment_based_post(content_in_post)
         comment_without_linebreak = remove_linebreak_text(comment_created)
         comment_without_emoji_and_linebreak = remove_emojis_text(comment_without_linebreak)
