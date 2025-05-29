@@ -2,3 +2,4 @@ selenium
 webdriver-manager
 emoji
 python-dotenv
+python-crontab
