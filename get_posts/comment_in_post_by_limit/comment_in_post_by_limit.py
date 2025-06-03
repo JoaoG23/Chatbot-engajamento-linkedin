@@ -10,6 +10,7 @@ from get_posts.create_comment_based_post.create_comment_based_post import create
 
 from utils.remove_emojis_text.remove_emojis_text import remove_emojis_text
 from utils.remove_linebreak_text.remove_linebreak_text import remove_linebreak_text
+from utils.logging.log_manager.log_manager import write_to_log
 
 SCROLL_PAUSE_TIME = 20
 
@@ -45,5 +46,6 @@ def comment_in_post_by_limit(driver, limit_comments):
         fill_comment_input_and_send(driver, post, comment_without_emoji_and_linebreak,i)
         
         quantity_posts_comments += 1
+        write_to_log(f"Post {i+1} comentado com sucesso!", type='info')
 
     return quantity_posts_comments

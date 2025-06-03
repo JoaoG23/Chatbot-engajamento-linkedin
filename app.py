@@ -15,14 +15,17 @@ from get_posts.search_posts_and_comment.search_posts_and_comment import search_p
 from utils.logging.log_manager.log_manager import write_to_log
 
 options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
 service = Service(ChromeDriverManager().install())
 
 driver = webdriver.Chrome(service=service, options=options)
 
-load_dotenv()
-
-    
-if __name__ == '__main__':
+load_dotenv() 
+        
+def app():
     try:
         print("********************************")
         print("*                              *")
@@ -33,7 +36,8 @@ if __name__ == '__main__':
         print("Este um Bot de automação para comentar em posts do LinkedIn.")
         print("Esperamos que você aproveite!")
         print("e Um beijo na sua bundinha!....😁")
-        
+        write_to_log("Aplicação INICIADA! Este um Bot de automação para comentar em posts do LinkedIn.", type='info')
+
         driver.implicitly_wait(15)
         driver.maximize_window()
         
@@ -51,4 +55,5 @@ if __name__ == '__main__':
         write_to_log(f"Exception: {traceback.format_exc()}", type='error')
     finally:
         print("Encerrando automação")
+        write_to_log("Aplicação ENCERRADA!", type='info')
         driver.quit()   
