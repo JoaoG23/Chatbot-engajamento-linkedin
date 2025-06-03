@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  linkedin-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: linkedin_bot
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs 
+      - ./templates:/app/templates
+    restart: unless-stopped
+
