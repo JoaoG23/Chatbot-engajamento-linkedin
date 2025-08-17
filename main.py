@@ -6,5 +6,5 @@ if __name__ == '__main__':
     while True:      
         app()
         
-        TIME_EVERY_8_HOURS = 28800
-        sleep(TIME_EVERY_8_HOURS)
+        TIME_EVERY_4_HOURS = 18000
+        sleep(TIME_EVERY_4_HOURS)

@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 from time import sleep
-
+from utils.logging.log_manager.log_manager import write_to_log
 
 
 def do_login(driver, login_data):
@@ -26,4 +26,6 @@ def do_login(driver, login_data):
     login_button = driver.find_element(By.XPATH, '//*[@id="organic-div"]/form/div[4]/button')
     login_button.click()
     sleep(10)
+    
+    write_to_log("Login efetuado com sucesso.", type='info')
     

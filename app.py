@@ -15,7 +15,7 @@ from get_posts.search_posts_and_comment.search_posts_and_comment import search_p
 from utils.logging.log_manager.log_manager import write_to_log
 
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+# options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
@@ -35,7 +35,7 @@ def app():
         print("")
         print("Este um Bot de automação para comentar em posts do LinkedIn.")
         print("Esperamos que você aproveite!")
-        print("e Um beijo na sua bundinha!....😁")
+        print("e Um beijo na sua bundinha!....")
         write_to_log("Aplicação INICIADA! Este um Bot de automação para comentar em posts do LinkedIn.", type='info')
 
         driver.implicitly_wait(15)

@@ -39,7 +39,7 @@ def create_comment_based_post(content_post):
         ],
         "generation_config": {
             # "candidate_count": 1,
-            "temperature": 0.9
+            "temperature": 0.6
         }
     }
     try:

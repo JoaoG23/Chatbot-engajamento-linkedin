@@ -1,0 +1,2 @@
+def create_posts():
+    
