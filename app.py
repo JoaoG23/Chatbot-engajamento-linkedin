@@ -1,6 +1,7 @@
 
 import os
 import traceback
+import uuid
 
 from dotenv import load_dotenv
 
@@ -26,7 +27,11 @@ driver = webdriver.Chrome(service=service, options=options)
 load_dotenv() 
         
 def app():
+    versao = os.getenv("VERSAO")
     try:
+        print(f"Versão: {versao}")
+        write_to_log(f"Versão: {versao}", type='info')
+        
         print("********************************")
         print("*                              *")
         print("*       BEM-VINDO(A)!          *")

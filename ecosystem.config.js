@@ -6,7 +6,7 @@ module.exports = {
     env_production: {
       ENVIRONMENT: "production",
       // Carrega variáveis do arquivo .env
-      env_file: "prod.env"
+      env_file: ".env.prod"
     },
   }]
 }
