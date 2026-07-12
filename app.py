@@ -40,7 +40,6 @@ def app():
         print("")
         print("Este um Bot de automação para comentar em posts do LinkedIn.")
         print("Esperamos que você aproveite!")
-        print("e Um beijo na sua bundinha!....")
         write_to_log("Aplicação INICIADA! Este um Bot de automação para comentar em posts do LinkedIn.", type='info')
 
         driver.implicitly_wait(15)
@@ -50,7 +49,9 @@ def app():
             'email': os.getenv("USER_LINKEDIN"),
             'password': os.getenv("PASSWORD_LINKEDIN")
         }
-        do_login(driver, user_login)
+        driver.get("https://www.linkedin.com/login/pt?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin")
+
+        # do_login(driver, user_login)
         
         search_posts_and_comment(driver)
    
@@ -62,3 +63,6 @@ def app():
         print("Encerrando automação")
         write_to_log("Aplicação ENCERRADA!", type='info')
         driver.quit()   
+        
+if __name__ == "__main__":
+    app()

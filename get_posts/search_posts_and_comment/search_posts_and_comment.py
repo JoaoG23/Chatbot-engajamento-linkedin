@@ -2,15 +2,12 @@ import os
 from time import sleep
 
 from get_posts.comment_in_post_by_limit.comment_in_post_by_limit import comment_in_post_by_limit
-from get_posts.encode_message_for_url.encode_message_for_url import encode_message_for_url
 from get_posts.scroll_by_limit_comments.scroll_by_limit_comments import scroll_by_limit_comments
-
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from utils.logging.log_manager.log_manager import write_to_log
 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-
-    
 def search_posts_and_comment(driver):
 
     sleep(5)
@@ -21,7 +18,6 @@ def search_posts_and_comment(driver):
     
     scroll_by_limit_comments(driver, limit_comments)
     
-    driver.execute_script("window.scrollTo(0, 0);")
     sleep(7)
     
     comment_in_post_by_limit(driver, limit_comments)
