@@ -1,0 +1,1 @@
+from .get_text_from_file import get_text_from_file

@@ -8,7 +8,7 @@ LINKEDIN_HOME_URL = "https://www.linkedin.com/home"
 
 async def _navigate_to_home(page: Page) -> None:
     """Navega para a página inicial do LinkedIn."""
-    await page.goto(LINKEDIN_HOME_URL, wait_until="networkidle")
+    await page.goto(LINKEDIN_HOME_URL, wait_until="domcontentloaded")
 
 
 async def _click_sign_in_button(page: Page) -> None:
@@ -36,7 +36,7 @@ async def _submit_login(page: Page) -> None:
     """Clica no botão de entrar no formulário de login."""
     await asyncio.sleep(2)
     await page.get_by_role("button", name="Entrar", exact=True).click()
-    await page.wait_for_load_state("networkidle")
+    await page.wait_for_load_state("domcontentloaded")
 
 
 async def do_login(page: Page, email: str, password: str) -> None:
