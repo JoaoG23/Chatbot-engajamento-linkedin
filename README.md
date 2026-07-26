@@ -1,78 +1,127 @@
-# Bot Engajamento linkedin
+# Bot de Comentador para LinkedIn 🤖
 
-🧲 Desenvolver um bot de engajamento para o LinkedIn que funcione da seguinte forma: ao inserir um nome na barra de pesquisa, o sistema acessa as publicações, analisa o conteúdo com base em um prompt e, automaticamente, adiciona um comentário curto (máximo de 60 caracteres) e um 'gostei' 👍🏽
+Automação inteligente e humanizada para o LinkedIn desenvolvida em **Python** utilizando **Playwright** e a API **Google Gemini IA**. O robô é capaz de conectar a uma sessão ativa do Chrome, analisar as postagens do seu feed, gerar comentários contextuais e relevantes de forma automatizada com base em sua persona/currículo e registrar o histórico para evitar duplicatas.
 
-**Tempo: 17**
+---
 
 ## 1. Tecnologias Utilizadas 🛠
 
-**Automatização** 🤖
+* **Automação de Navegador:** [Playwright](https://playwright.dev/) (mais rápido e seguro que o Selenium)
+* **Inteligência Artificial:** [Google Gemini API](https://ai.google.dev/) (usando a nova biblioteca oficial `google-genai`)
+* **Linguagem:** [Python](https://www.python.org/)
+* **Controle de Progresso:** [tqdm](https://github.com/tqdm/tqdm) (barra de progresso interativa no terminal)
+* **Outros:** `python-dotenv` para variáveis de ambiente e `hashlib` para criptografia (deduplicação)
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-[![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)](https://www.selenium.dev/)
-[![GeminiAI](https://img.shields.io/badge/GeminiAI-FF6600?style=for-the-badge&logo=ai&logoColor=white)]()
-![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue?style=for-the-badge&logo=google-chrome)
-![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white)
-
+---
 
 ## 2. Fluxo da Aplicação 🔧
 
-✅ **0. Acessar tela de login LinkedIn e preencher usuário e senha**
+1. **Conexão/Login:**
+   * O robô tenta se conectar a uma janela ativa do Google Chrome utilizando o protocolo **CDP (Chrome DevTools Protocol)** na porta `9222`. Isso permite usar sua sessão já logada sem precisar fazer login toda vez.
+   * Caso não consiga, ele inicia uma nova instância do navegador e realiza o login automático utilizando as credenciais fornecidas no arquivo `.env`.
+2. **Navegação e Leitura:**
+   * Acessa a página inicial do feed do LinkedIn.
+   * Realiza rolagem automática para carregar novas postagens.
+3. **Análise de Conteúdo (Evitando Duplicatas):**
+   * Extrai o texto da publicação e gera um **hash MD5** exclusivo a partir dos primeiros 200 caracteres do post.
+   * Verifica se o hash já existe no arquivo [commented_posts_history.json](file:///n:/github/Chatbot-engajamento-linkedin/commented_posts_history.json). Se já existir ou se um comentário seu já for detectado na postagem, ela é pulada automaticamente.
+4. **Geração de Comentário pela IA:**
+   * Envia o texto da postagem para o Google Gemini junto com as regras de persona e diretrizes configuradas no [prompt.txt](file:///n:/github/Chatbot-engajamento-linkedin/prompt.txt).
+   * O Gemini gera um comentário profissional de 120 a 180 caracteres personalizado.
+5. **Publicação:**
+   * O robô clica no campo de comentário do post, insere a resposta gerada e clica em publicar.
+   * O hash do post é registrado no arquivo de histórico local para garantir que nunca seja comentado de novo.
 
-✅ **1. Preencher a barra de pesquisa com a (__descrição__) buscada**
+---
 
-✅ **2. Entrar em cada postagem e capturar o texto dela com o assunto**
+## 3. Estrutura do Projeto 📂
 
-✅ **3. Clicar em gostei na postagem**
+Para uma descrição detalhada de cada módulo, consulte a [DOCUMENTACAO.md](file:///n:/github/Chatbot-engajamento-linkedin/DOCUMENTACAO.md). A estrutura simplificada é:
 
-✅ **4. Enviar para AI Gemini, com o prompt requerido**
+* `main.py`: Ponto de entrada e orquestrador principal do robô.
+* `config.py`: Arquivo de configurações globais e variáveis de ambiente.
+* `prompt.txt`: Persona e regras fornecidas para a IA formular as respostas.
+* `commented_posts_history.json`: Histórico persistente de hashes MD5 dos posts comentados.
+* `services/`: Módulos de interação com o navegador (`browser_service.py`), integração com a IA (`gemini_service.py`) e interações no LinkedIn (`linkedin_service.py`).
+* `utils/`: Módulos para limpeza de texto (`text_cleaner.py`) e controle de histórico (`history_manager.py`).
 
-✅ **5. Capturar a resposta da AI Gemini**
+---
 
-✅ **6. Preencher o comentário com base na resposta da AI Gemini**
+## 4. Como Instalar 👨🏽‍💻
 
-✅ **7. Enviar comentário**
+### Pré-requisitos
+* Python 3.10 ou superior
+* Google Chrome instalado
 
-✅ **8. Inserir postagem e comentário nos logs para controle**.
+### Passo a Passo
 
-## 3. Como Instalar 👨🏽‍💻
+1. **Clone este repositório:**
+   ```bash
+   git clone https://github.com/JoaoG23/Chatbot-engajamento-linkedin.git
+   cd Chatbot-engajamento-linkedin
+   ```
 
-### Backend
+2. **Instale as dependências:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. Clone este repositório;
-2. Instale as dependências utilizando `pip install -r requirements.txt`;
-3. Configure as variáveis de ambiente no arquivo `.env`:
+3. **Instale os binários do Playwright:**
+   ```bash
+   playwright install
+   ```
 
-```
-USER_LINKEDIN="email@emai.com" 
-PASSWORD_LINKEDIN="2393932" 
-COMMENT_LIMIT=10 # Limite de conexoes
-AI_TOKEN='token' # token do gemini
-```
+4. **Configure o arquivo `.env`:**
+   Crie um arquivo `.env` na raiz do projeto e configure as seguintes variáveis:
+   ```env
+   AI_TOKEN="SUA_CHAVE_API_DO_GEMINI"
+   LINKEDIN_EMAIL="seu_email_do_linkedin"
+   LINKEDIN_PASSWORD="sua_senha_do_linkedin"
+   CDP_URL="http://127.0.0.1:9222"
+   LIMIT_COMMENTS=25
+   ```
 
-4. Execute o bot com `python __init__.py`.
+---
 
-## 4. Como Usar 😃
+## 5. Como Usar 😃
 
-0. Digite qual o tema gostaria de pesquisar `ex: sobre python, clear arch...`
-1. Acesse o LinkedIn e faça login com um usuário válido;
-2. No terminal, insira a palavra-chave desejada para busca;
-3. O bot navegará automaticamente, curtindo e comentando nas postagens até o limite estabelecido na variavel `COMMENT_LIMIT=10`;
-4. Os logs serão armazenados para análise posterior.
+### Modo Recomendado (Via CDP com seu navegador ativo)
 
-## 5. Autor do Projeto
+Para que o robô use seu perfil já conectado do Chrome (evitando verificações de segurança/2FA do LinkedIn):
 
- <img style="border-radius:50%;" src="https://avatars.githubusercontent.com/u/80895578?v=4" width="100px;" alt=""/>
- <br />
- <sub><b>Joao Guilherme</b></sub></a> <a href="https://github.com/JoaoG23/">🚀</a>
+1. **Feche todas as janelas do Chrome** completamente.
+2. Abra o Chrome via terminal ou Prompt de Comando com a depuração remota ativada:
+   * **Windows:**
+     ```cmd
+     chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\ChromeDebug"
+     ```
+   * **macOS / Linux:**
+     ```bash
+     google-chrome --remote-debugging-port=9222 --user-data-dir="/tmp/ChromeDebug"
+     ```
+3. Acesse o LinkedIn no navegador aberto por esse comando e certifique-se de que está logado na sua conta.
+4. Execute o bot no terminal do seu projeto:
+   ```bash
+   python main.py
+   ```
 
-Feito com ❤️ por Joao Guilherme 👋🏽 Entre em contato pelos links abaixo!
+O bot começará a rodar no terminal, mostrando uma barra de progresso para acompanhar o envio de cada comentário até atingir o limite configurado em `LIMIT_COMMENTS`.
 
-[![Linkedin Badge](https://shields.io/badge/-Joao%20Guilherme-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/joaog123/)](https://www.linkedin.com/in/joaog123/)
+---
 
-[![Email Badge](https://shields.io/badge/-joaoguilherme94@live.com-c80?style=flat-square&logo=Microsoft&logoColor=white&link=mailto:joaoguilherme94@live.com)](mailto:joaoguilherme94@live.com)
+## 6. Autor do Projeto
 
-## 6. Licença 📝
+<img style="border-radius:50%;" src="https://avatars.githubusercontent.com/u/80895578?v=4" width="100px;" alt="João Guilherme"/>
+<br />
+<sub><b>Joao Guilherme</b></sub> <a href="https://github.com/JoaoG23/">🚀</a>
 
-[![License](https://shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
+Feito com ❤️ por Joao Guilherme 👋🏽 Entre em contato:
 
+[![Linkedin Badge](https://img.shields.io/badge/-Joao%20Guilherme-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/joaog123/)](https://www.linkedin.com/in/joaog123/)
+[![Email Badge](https://img.shields.io/badge/-joaoguilherme94@live.com-c80?style=flat-square&logo=Microsoft&logoColor=white&link=mailto:joaoguilherme94@live.com)](mailto:joaoguilherme94@live.com)
+
+---
+
+## 7. Licença 📝
+
+Este projeto está licenciado sob a licença descrita no arquivo [LICENSE](./LICENSE).

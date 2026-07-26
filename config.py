@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-AI_TOKEN = os.getenv("AI_TOKEN", "AIzaSyB6PeCgkJxnk7TQ6_-FUF2AhjTbZrwdReQ")
+AI_TOKEN = os.getenv("AI_TOKEN", "")
 LINKEDIN_EMAIL = os.getenv("LINKEDIN_EMAIL", "")
 LINKEDIN_PASSWORD = os.getenv("LINKEDIN_PASSWORD", "")
 CDP_URL = os.getenv("CDP_URL", "http://127.0.0.1:9222")
