@@ -1,0 +1,34 @@
+# Ambientes Virtuais
+venv/
+env/
+.env
+
+# Variáveis de Ambiente (Mantenha o .env.example se tiver, mas ignore o original)
+.env
+.env.prod
+.env.local
+
+# PyInstaller / Build
+dist/
+build/
+*.spec
+*.exe
+
+# Python (Cache e Arquivos Compilados)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+logs/
+*.log
+
+# Outros
+.pytest_cache/
+.coverage
+.vscode/
+.idea/
+venv/
+.venv/
+__pycache__/
+*.pyc

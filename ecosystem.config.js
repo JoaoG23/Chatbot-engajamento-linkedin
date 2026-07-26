@@ -2,7 +2,7 @@ module.exports = {
   apps : [{
     name   : "comentador-linkedin",
     script : "main.py",
-    interpreter: "python",
+    interpreter: "./venv/Scripts/python.exe",
     env_production: {
       ENVIRONMENT: "production",
       // Carrega variáveis do arquivo .env
