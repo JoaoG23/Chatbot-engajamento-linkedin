@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 from time import sleep
-
+from utils.logging.log_manager.log_manager import write_to_log
 
 
 def do_login(driver, login_data):
@@ -11,19 +11,17 @@ def do_login(driver, login_data):
     password = login_data['password']
     sleep(2)
     
-    # while len(driver.find_elements(By.XPATH, '//*[@id="lightbox-cover"]')) < 1:
-    #     sleep(2)
-    # print("Login efetuado com sucesso.")
-    # sleep(2)
+    email_input = driver.find_element(By.CSS_SELECTOR, 'input[type="email"]')
+    password_input = driver.find_element(By.CSS_SELECTOR, 'input[type="password"]')
     
-    user_input = driver.find_element(By.XPATH, '//*[@id="username"]')
-    user_input.send_keys(email)
+    email_input.send_keys(email)
     sleep(1)
-    password_input = driver.find_element(By.XPATH, '//*[@id="password"]')
     password_input.send_keys(password)
     
     sleep(2)
     login_button = driver.find_element(By.XPATH, '//*[@id="organic-div"]/form/div[4]/button')
     login_button.click()
-    sleep(10)
+    sleep(20)
+    
+    write_to_log("Login efetuado com sucesso.", type='info')
     

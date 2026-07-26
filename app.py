@@ -1,6 +1,7 @@
 
 import os
 import traceback
+import uuid
 
 from dotenv import load_dotenv
 
@@ -15,7 +16,7 @@ from get_posts.search_posts_and_comment.search_posts_and_comment import search_p
 from utils.logging.log_manager.log_manager import write_to_log
 
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+# options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
@@ -26,7 +27,11 @@ driver = webdriver.Chrome(service=service, options=options)
 load_dotenv() 
         
 def app():
+    versao = os.getenv("VERSAO")
     try:
+        print(f"Versão: {versao}")
+        write_to_log(f"Versão: {versao}", type='info')
+        
         print("********************************")
         print("*                              *")
         print("*       BEM-VINDO(A)!          *")
@@ -35,7 +40,6 @@ def app():
         print("")
         print("Este um Bot de automação para comentar em posts do LinkedIn.")
         print("Esperamos que você aproveite!")
-        print("e Um beijo na sua bundinha!....😁")
         write_to_log("Aplicação INICIADA! Este um Bot de automação para comentar em posts do LinkedIn.", type='info')
 
         driver.implicitly_wait(15)
@@ -45,7 +49,9 @@ def app():
             'email': os.getenv("USER_LINKEDIN"),
             'password': os.getenv("PASSWORD_LINKEDIN")
         }
-        do_login(driver, user_login)
+        driver.get("https://www.linkedin.com/login/pt?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin")
+
+        # do_login(driver, user_login)
         
         search_posts_and_comment(driver)
    
@@ -57,3 +63,6 @@ def app():
         print("Encerrando automação")
         write_to_log("Aplicação ENCERRADA!", type='info')
         driver.quit()   
+        
+if __name__ == "__main__":
+    app()
