@@ -54,7 +54,7 @@ class OllamaService:
                     },
                 ],
                 options={
-                    "temperature": 0.5,
+                    "temperature": 0.3,
                     "top_p": 0.8,
                     "top_k": 20,
                 },

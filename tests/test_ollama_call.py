@@ -49,15 +49,16 @@ class TestOllamaService(unittest.TestCase):
 
     def test_integration_generate_comment_with_ollama(self):
         """Teste de integração real com o servidor Ollama (Llama 3.2)."""
-        sample_post = """A discussão sobre reforma tributária costuma girar em torno de alíquotas, regras e legislação. Mas, na prática, a transformação será muito mais ampla.
-Em conversa com Priscila Rossini, da Accenture, Rosana Jayme, Superintendente Executiva de Gestão Fiscal no Santander Brasil, compartilha a visão de quem está conduzindo a preparação de uma das maiores instituições financeiras do país para esse novo cenário.
-Elas falam sobre o desafio de revisar processos ponta a ponta, o impacto da reforma sobre dados, tecnologia e operações, a necessidade de coordenação entre áreas que historicamente trabalhavam de forma separada e o tamanho da mudança que as organizações terão de absorver nos próximos anos.
-👉 Assista ao conteúdo completo no YouTube: https://accntu.re/4foJyoF"""
+        sample_post = """Tem muita IA, muito framework e muita novidade. Mas como tudo isso se conecta no desenvolvimento de software?
+No AI na Prática, vamos conversar com especialistas, de desenvolvedores a CTOs, para entender como aplicar IA em todas as etapas da engenharia de software.
+A ideia é mostrar como a IA pode apoiar toda a jornada, do upstream ao downstream, com experiências reais e sem hype.
+As lives são gratuitas, ao vivo e abertas para perguntas e as 19h"""
         comment = self.service.generate_comment(sample_post)
         print(comment)
 
         self.assertIsInstance(comment, str)
-        self.assertTrue(len(comment) > 10)
+        self.assertTrue(len(comment) >= 100)
+        self.assertTrue(len(comment) <= 140)
 
 
 if __name__ == "__main__":
