@@ -22,12 +22,12 @@ class OllamaService:
         ]
 
     def _read_prompt(self) -> str:
-        """Lê o arquivo de prompt do sistema."""
+        """Lê o arquivo de prompt/persona do sistema."""
         if not os.path.exists(self.prompt_path):
             return ""
 
-        with open(self.prompt_path, "r", encoding="utf8") as f:
-            return f.read().strip()
+        with open(self.prompt_path, "r", encoding="utf8") as prompt_file_stream:
+            return prompt_file_stream.read().strip()
 
     def get_fallback_comment(self) -> str:
         """Retorna um comentário de contingência aleatório."""
@@ -59,8 +59,8 @@ class OllamaService:
                     "top_k": 20,
                 },
             )
-        except Exception as e:
-            print(f"[OllamaService] Erro ao comunicar com Ollama ({e}). Utilizando contingência.")
+        except Exception as communication_error:
+            print(f"[OllamaService] Erro ao comunicar com Ollama ({communication_error}). Utilizando contingência.")
             return self.get_fallback_comment()
 
         if not response or "message" not in response or "content" not in response["message"]:

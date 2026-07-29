@@ -6,8 +6,9 @@ from services.browser_service import BrowserService
 from services.ollama_service import OllamaService
 from services.linkedin_service import LinkedInService
 
-if hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8')
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 
 async def main(use_cdp: bool = True, target_posts: int = LIMIT_COMMENTS):
     """
@@ -21,21 +22,29 @@ async def main(use_cdp: bool = True, target_posts: int = LIMIT_COMMENTS):
     print("=================== LINKEDIN ENGAJADOR COMENTADOR DE POSTS ===================")
     print("=================== Criado por Joao Guilherme Desenvolvedor Python ===================")
 
-    async with async_playwright() as p:
+    async with async_playwright() as playwright_instance:
         browser = None
         if use_cdp:
             try:
-                browser, context, page = await BrowserService.connect_existing_chrome(p, cdp_url=CDP_URL)
-            except Exception as e:
-                print(f"[Main] Falha ao conectar via CDP ({e}). Alternando para inicialização de novo navegador...")
+                browser, context, page = await BrowserService.connect_existing_chrome(
+                    playwright_instance, cdp_url=CDP_URL
+                )
+            except Exception as connection_error:
+                print(
+                    f"[Main] Falha ao conectar via CDP ({connection_error}). Alternando para inicialização de novo navegador..."
+                )
                 use_cdp = False
 
         if not use_cdp:
-            browser, context, page = await BrowserService.launch_new_browser(p, headless=True)
+            browser, context, page = await BrowserService.launch_new_browser(
+                playwright_instance, headless=False
+            )
             if LINKEDIN_EMAIL and LINKEDIN_PASSWORD:
                 await BrowserService.do_login(page, LINKEDIN_EMAIL, LINKEDIN_PASSWORD)
             else:
-                print("[Main] E-mail e senha não informados no .env. Por favor, faça o login manualmente na janela aberta.")
+                print(
+                    "[Main] E-mail e senha não informados no .env. Por favor, faça o login manualmente na janela aberta."
+                )
                 await page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded")
                 await asyncio.sleep(15)
 
@@ -48,6 +57,6 @@ async def main(use_cdp: bool = True, target_posts: int = LIMIT_COMMENTS):
 
         print("[Main] Execução finalizada com sucesso!")
 
+
 if __name__ == "__main__":
-    # Altere use_cdp para False se desejar abrir um novo navegador e fazer login com e-mail/senha
     asyncio.run(main(use_cdp=True, target_posts=LIMIT_COMMENTS))
