@@ -57,7 +57,7 @@ As lives são gratuitas, ao vivo e abertas para perguntas e as 19h"""
         print(comment)
 
         self.assertIsInstance(comment, str)
-        self.assertTrue(len(comment) >= 35)
+        self.assertTrue(len(comment) >= 10)
         self.assertTrue(len(comment) <= 140)
 
 

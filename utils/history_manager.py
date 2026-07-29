@@ -16,6 +16,9 @@ def load_history() -> set:
 
 def save_history(history_set: set) -> None:
     """Salva o conjunto de hashes no arquivo JSON de histórico."""
+    folder = os.path.dirname(HISTORY_FILE)
+    if folder:
+        os.makedirs(folder, exist_ok=True)
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(list(history_set), f, ensure_ascii=False, indent=2)
 
