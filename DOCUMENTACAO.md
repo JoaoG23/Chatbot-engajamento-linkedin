@@ -13,7 +13,7 @@ Chatbot-engajamento-linkedin/
 ├── requirements.txt                # Lista de dependências Python do projeto
 ├── config.py                       # Módulo central de configurações
 ├── main.py                         # Ponto de entrada principal da aplicação (Orquestrador)
-├── prompt.txt                      # Arquivo de texto com diretrizes, persona e regras para a IA
+├── persona.txt                     # Arquivo de texto com diretrizes, persona e regras para a IA
 ├── commented_posts_history.json    # Histórico persistente em JSON dos hashes dos posts comentados
 │
 ├── services/                       # Camada de Serviços de Negócio
@@ -48,7 +48,7 @@ Chatbot-engajamento-linkedin/
   - `LINKEDIN_EMAIL` / `LINKEDIN_PASSWORD`: Credenciais para login opcional.
   - `CDP_URL`: URL do protocolo DevTools do Chrome (`http://localhost:9222`).
   - `HISTORY_FILE`: Caminho para o arquivo de histórico de posts comentados.
-  - `PROMPT_FILE`: Caminho do arquivo de prompt da IA (`prompt.txt`).
+  - `PROMPT_FILE`: Caminho do arquivo de prompt da IA (`persona.txt`).
 
 ---
 
@@ -64,7 +64,7 @@ Chatbot-engajamento-linkedin/
 #### 🔹 `services/ollama_service.py`
 **Responsabilidade:** Gerar respostas inteligentes, personalizadas e humanizadas utilizando o servidor local do **Ollama** com o modelo **Llama 3.2**.
 - **Principais funções:**
-  - `_read_prompt()`: Lê as instruções e diretrizes do arquivo `prompt.txt`.
+  - `_read_prompt()`: Lê as instruções e diretrizes do arquivo `persona.txt`.
   - `generate_comment(content_post)`: Conecta ao Ollama via SDK `ollama-python`, envia o prompt do sistema e o texto da publicação, higieniza a resposta gerada e inclui um sistema de contingência/fallback automático.
 
 #### 🔹 `services/linkedin_service.py`
@@ -103,7 +103,7 @@ Chatbot-engajamento-linkedin/
 - Decide entre conectar ao Chrome em execução via CDP ou realizar o login manual/automático.
 - Instancia os serviços (`OllamaService` e `LinkedInService`) e inicia o processamento do feed.
 
-#### 🔹 `prompt.txt`
+#### 🔹 `persona.txt`
 **Responsabilidade:** Definir a persona, o perfil profissional, experiências e regras para a IA em formato de texto.
 - Contém a persona ("Desenvolvedor Fullstack"), histórico profissional (experiências passadas), stacks (C#, React, Python, NestJS, etc.) e regras (respostas de 120-180 caracteres, sem emojis, em PT-BR).
 

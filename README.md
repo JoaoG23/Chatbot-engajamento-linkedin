@@ -26,7 +26,7 @@ Automação inteligente e humanizada para o LinkedIn desenvolvida em **Python** 
    * Extrai o texto da publicação e gera um **hash MD5** exclusivo a partir dos primeiros 200 caracteres do post.
    * Verifica se o hash já existe no arquivo [commented_posts_history.json](file:///n:/github/Chatbot-engajamento-linkedin/commented_posts_history.json). Se já existir ou se um comentário seu já for detectado na postagem, ela é pulada automaticamente.
 4. **Geração de Comentário pela IA:**
-   * Envia o texto da postagem para o Ollama local (modelo `llama3.2`) junto com as regras de persona e diretrizes configuradas no [prompt.txt](file:///n:/github/Chatbot-engajamento-linkedin/prompt.txt).
+   * Envia o texto da postagem para o Ollama local (modelo `llama3.2`) junto com as regras de persona e diretrizes configuradas no [persona.txt](file:///n:/github/Chatbot-engajamento-linkedin/persona.txt).
    * O Ollama gera um comentário profissional personalizado.
 5. **Publicação:**
    * O robô clica no campo de comentário do post, insere a resposta gerada e clica em publicar.
@@ -40,7 +40,7 @@ Para uma descrição detalhada de cada módulo, consulte a [DOCUMENTACAO.md](fil
 
 * `main.py`: Ponto de entrada e orquestrador principal do robô.
 * `config.py`: Arquivo de configurações globais e variáveis de ambiente.
-* `prompt.txt`: Persona e regras fornecidas para a IA formular as respostas.
+* `persona.txt`: Persona e regras fornecidas para a IA formular as respostas.
 * `commented_posts_history.json`: Histórico persistente de hashes MD5 dos posts comentados.
 * `services/`: Módulos de interação com o navegador (`browser_service.py`), integração com a IA local (`ollama_service.py`) e interações no LinkedIn (`linkedin_service.py`).
 * `utils/`: Módulos para limpeza de texto (`text_cleaner.py`) e controle de histórico (`history_manager.py`).
