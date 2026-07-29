@@ -3,7 +3,7 @@ import asyncio
 from playwright.async_api import async_playwright
 from config import LINKEDIN_EMAIL, LINKEDIN_PASSWORD, CDP_URL, LIMIT_COMMENTS
 from services.browser_service import BrowserService
-from services.gemini_service import GeminiService
+from services.ollama_service import OllamaService
 from services.linkedin_service import LinkedInService
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -39,8 +39,8 @@ async def main(use_cdp: bool = True, target_posts: int = LIMIT_COMMENTS):
                 await asyncio.sleep(15)
 
         # Inicializa os serviços
-        gemini_service = GeminiService()
-        linkedin_service = LinkedInService(page=page, gemini_service=gemini_service)
+        ollama_service = OllamaService()
+        linkedin_service = LinkedInService(page=page, llm_service=ollama_service)
 
         # Executa os comentários no feed
         await linkedin_service.process_feed_comments(target_count=target_posts)

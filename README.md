@@ -1,13 +1,13 @@
 # Bot de Comentador para LinkedIn 🤖
 
-Automação inteligente e humanizada para o LinkedIn desenvolvida em **Python** utilizando **Playwright** e a API **Google Gemini IA**. O robô é capaz de conectar a uma sessão ativa do Chrome, analisar as postagens do seu feed, gerar comentários contextuais e relevantes de forma automatizada com base em sua persona/currículo e registrar o histórico para evitar duplicatas.
+Automação inteligente e humanizada para o LinkedIn desenvolvida em **Python** utilizando **Playwright** e a IA local **Ollama (Llama 3.2)**. O robô é capaz de conectar a uma sessão ativa do Chrome, analisar as postagens do seu feed, gerar comentários contextuais e relevantes de forma automatizada com base em sua persona/currículo e registrar o histórico para evitar duplicatas.
 
 ---
 
 ## 1. Tecnologias Utilizadas 🛠
 
 * **Automação de Navegador:** [Playwright](https://playwright.dev/) (mais rápido e seguro que o Selenium)
-* **Inteligência Artificial:** [Google Gemini API](https://ai.google.dev/) (usando a nova biblioteca oficial `google-genai`)
+* **Inteligência Artificial Local:** [Ollama Python SDK](https://github.com/ollama/ollama-python) rodando o modelo **Llama 3.2**
 * **Linguagem:** [Python](https://www.python.org/)
 * **Controle de Progresso:** [tqdm](https://github.com/tqdm/tqdm) (barra de progresso interativa no terminal)
 * **Outros:** `python-dotenv` para variáveis de ambiente e `hashlib` para criptografia (deduplicação)
@@ -26,8 +26,8 @@ Automação inteligente e humanizada para o LinkedIn desenvolvida em **Python** 
    * Extrai o texto da publicação e gera um **hash MD5** exclusivo a partir dos primeiros 200 caracteres do post.
    * Verifica se o hash já existe no arquivo [commented_posts_history.json](file:///n:/github/Chatbot-engajamento-linkedin/commented_posts_history.json). Se já existir ou se um comentário seu já for detectado na postagem, ela é pulada automaticamente.
 4. **Geração de Comentário pela IA:**
-   * Envia o texto da postagem para o Google Gemini junto com as regras de persona e diretrizes configuradas no [prompt.txt](file:///n:/github/Chatbot-engajamento-linkedin/prompt.txt).
-   * O Gemini gera um comentário profissional de 120 a 180 caracteres personalizado.
+   * Envia o texto da postagem para o Ollama local (modelo `llama3.2`) junto com as regras de persona e diretrizes configuradas no [prompt.txt](file:///n:/github/Chatbot-engajamento-linkedin/prompt.txt).
+   * O Ollama gera um comentário profissional personalizado.
 5. **Publicação:**
    * O robô clica no campo de comentário do post, insere a resposta gerada e clica em publicar.
    * O hash do post é registrado no arquivo de histórico local para garantir que nunca seja comentado de novo.
@@ -42,7 +42,7 @@ Para uma descrição detalhada de cada módulo, consulte a [DOCUMENTACAO.md](fil
 * `config.py`: Arquivo de configurações globais e variáveis de ambiente.
 * `prompt.txt`: Persona e regras fornecidas para a IA formular as respostas.
 * `commented_posts_history.json`: Histórico persistente de hashes MD5 dos posts comentados.
-* `services/`: Módulos de interação com o navegador (`browser_service.py`), integração com a IA (`gemini_service.py`) e interações no LinkedIn (`linkedin_service.py`).
+* `services/`: Módulos de interação com o navegador (`browser_service.py`), integração com a IA local (`ollama_service.py`) e interações no LinkedIn (`linkedin_service.py`).
 * `utils/`: Módulos para limpeza de texto (`text_cleaner.py`) e controle de histórico (`history_manager.py`).
 
 ---
@@ -52,6 +52,7 @@ Para uma descrição detalhada de cada módulo, consulte a [DOCUMENTACAO.md](fil
 ### Pré-requisitos
 * Python 3.10 ou superior
 * Google Chrome instalado
+* Ollama instalado com o modelo `llama3.2` baixado (`ollama run llama3.2`)
 
 ### Passo a Passo
 
@@ -74,7 +75,8 @@ Para uma descrição detalhada de cada módulo, consulte a [DOCUMENTACAO.md](fil
 4. **Configure o arquivo `.env`:**
    Crie um arquivo `.env` na raiz do projeto e configure as seguintes variáveis:
    ```env
-   AI_TOKEN="SUA_CHAVE_API_DO_GEMINI"
+   OLLAMA_HOST="http://localhost:11434"
+   OLLAMA_MODEL="llama3.2"
    LINKEDIN_EMAIL="seu_email_do_linkedin"
    LINKEDIN_PASSWORD="sua_senha_do_linkedin"
    CDP_URL="http://127.0.0.1:9222"
@@ -100,7 +102,8 @@ Para que o robô use seu perfil já conectado do Chrome (evitando verificações
      google-chrome --remote-debugging-port=9222 --user-data-dir="/tmp/ChromeDebug"
      ```
 3. Acesse o LinkedIn no navegador aberto por esse comando e certifique-se de que está logado na sua conta.
-4. Execute o bot no terminal do seu projeto:
+4. Certifique-se de que o **Ollama** está em execução na sua máquina.
+5. Execute o bot no terminal do seu projeto:
    ```bash
    python main.py
    ```

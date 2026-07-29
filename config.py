@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-AI_TOKEN = os.getenv("AI_TOKEN", "")
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
 LINKEDIN_EMAIL = os.getenv("LINKEDIN_EMAIL", "")
 LINKEDIN_PASSWORD = os.getenv("LINKEDIN_PASSWORD", "")
 CDP_URL = os.getenv("CDP_URL", "http://127.0.0.1:9222")

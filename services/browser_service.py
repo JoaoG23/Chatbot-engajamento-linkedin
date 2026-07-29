@@ -60,7 +60,7 @@ class BrowserService:
         """
         print(f"[BrowserService] Navegando para {LINKEDIN_HOME_URL}...")
         await BrowserService._safe_goto(page, LINKEDIN_HOME_URL)
-        await asyncio.sleep(1)
+        await asyncio.sleep(20)
 
         # Clica no botão Entrar da landing page se visível
         sign_in_cta = page.locator('[data-test-id="home-hero-sign-in-cta"]')
@@ -87,7 +87,7 @@ class BrowserService:
         if await submit_btn.is_visible():
             await submit_btn.click()
             await page.wait_for_load_state("domcontentloaded")
-            await asyncio.sleep(23)
+            await asyncio.sleep(30)
 
         if "feed" not in page.url:
             await BrowserService._safe_goto(page, "https://www.linkedin.com/feed/")

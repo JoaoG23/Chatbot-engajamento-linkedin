@@ -2,16 +2,16 @@ import random
 from tqdm import tqdm
 import asyncio
 from playwright.async_api import Page
-from services.gemini_service import GeminiService
+from services.ollama_service import OllamaService
 from utils.text_cleaner import remove_linebreak_text
 from utils.history_manager import load_history, save_history, get_post_hash
 
 class LinkedInService:
     """Serviço responsável pelas interações automatizadas no feed do LinkedIn."""
 
-    def __init__(self, page: Page, gemini_service: GeminiService):
+    def __init__(self, page: Page, llm_service: OllamaService):
         self.page = page
-        self.gemini_service = gemini_service
+        self.llm_service = llm_service
         self.history = load_history()
 
     async def expand_post_if_needed(self, post_index: int) -> None:
@@ -135,7 +135,7 @@ class LinkedInService:
         snippet_display = clean_text[:80]
         pbar.set_postfix_str(f"Lendo: {snippet_display}...")
 
-        comment_text = self.gemini_service.generate_comment(clean_text)
+        comment_text = self.llm_service.generate_comment(clean_text)
 
         await btn.click()
         await asyncio.sleep(1.5)
