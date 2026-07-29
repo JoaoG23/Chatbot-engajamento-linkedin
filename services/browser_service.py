@@ -40,7 +40,7 @@ class BrowserService:
         return browser, context, page
 
     @staticmethod
-    async def launch_new_browser(playwright: Playwright, headless: bool = False) -> tuple[Browser, BrowserContext, Page]:
+    async def launch_new_browser(playwright: Playwright, headless: bool = True) -> tuple[Browser, BrowserContext, Page]:
         """Inicia uma nova instância de navegador (Chromium/Chrome)."""
         print("[BrowserService] Iniciando nova instância do navegador...")
         browser = await playwright.chromium.launch(headless=headless)

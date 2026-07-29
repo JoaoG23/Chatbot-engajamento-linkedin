@@ -18,7 +18,8 @@ async def main(use_cdp: bool = True, target_posts: int = LIMIT_COMMENTS):
                  Se False, abre um novo navegador e realiza login com e-mail/senha.
         target_posts: Quantidade de postagens a comentar.
     """
-    print("=================== LINKEDIN AUTOMATION BOT ===================")
+    print("=================== LINKEDIN ENGAJADOR COMENTADOR DE POSTS ===================")
+    print("=================== Criado por Joao Guilherme Desenvolvedor Python ===================")
 
     async with async_playwright() as p:
         browser = None
@@ -30,7 +31,7 @@ async def main(use_cdp: bool = True, target_posts: int = LIMIT_COMMENTS):
                 use_cdp = False
 
         if not use_cdp:
-            browser, context, page = await BrowserService.launch_new_browser(p, headless=False)
+            browser, context, page = await BrowserService.launch_new_browser(p, headless=True)
             if LINKEDIN_EMAIL and LINKEDIN_PASSWORD:
                 await BrowserService.do_login(page, LINKEDIN_EMAIL, LINKEDIN_PASSWORD)
             else:
