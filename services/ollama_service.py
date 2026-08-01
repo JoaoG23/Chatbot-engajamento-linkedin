@@ -2,16 +2,17 @@ import os
 import random
 import ollama
 
-from config import OLLAMA_HOST, OLLAMA_MODEL, PROMPT_FILE
+from config import OLLAMA_HOST, OLLAMA_MODEL, PROMPT_FILE, EXAMPLES_FILE
 from utils.text_cleaner import remove_linebreak_text, remove_emojis_text
 
 
 class OllamaService:
-    def __init__(self, model_name=None, host=None, prompt_path=None):
+    def __init__(self, model_name=None, host=None, prompt_path=None, examples_path=None):
         self.model_name = model_name or OLLAMA_MODEL
         self.host = host or OLLAMA_HOST
         self.client = ollama.Client(host=self.host)
         self.prompt_path = prompt_path or PROMPT_FILE
+        self.examples_path = examples_path or EXAMPLES_FILE
         self.system_prompt = self._read_prompt()
 
         self.fallback_comments = [
@@ -21,13 +22,26 @@ class OllamaService:
             "Conteúdo sensacional! Parabéns pelo trabalho e muito obrigado por compartilhar essa visão conosco!",
         ]
 
-    def _read_prompt(self) -> str:
-        """Lê o arquivo de prompt/persona do sistema."""
-        if not os.path.exists(self.prompt_path):
+    def _read_file_content(self, path: str) -> str:
+        """Lê o conteúdo de um arquivo caso ele exista."""
+        if not path or not os.path.exists(path):
             return ""
 
-        with open(self.prompt_path, "r", encoding="utf8") as prompt_file_stream:
-            return prompt_file_stream.read().strip()
+        with open(path, "r", encoding="utf8") as file_stream:
+            return file_stream.read().strip()
+
+    def _read_prompt(self) -> str:
+        """Lê e combina o arquivo de instruções da persona e o arquivo de exemplos."""
+        persona_content = self._read_file_content(self.prompt_path)
+        examples_content = self._read_file_content(self.examples_path)
+
+        if not persona_content:
+            return examples_content
+
+        if not examples_content:
+            return persona_content
+
+        return f"{persona_content}\n\n{examples_content}"
 
     def get_fallback_comment(self) -> str:
         """Retorna um comentário de contingência aleatório."""

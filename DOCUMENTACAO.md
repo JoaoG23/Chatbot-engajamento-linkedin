@@ -14,7 +14,8 @@ Chatbot-engajamento-linkedin/
 ├── config.py                       # Módulo central de configurações
 ├── main.py                         # Ponto de entrada principal da aplicação (Orquestrador)
 ├── data/
-│   ├── persona.txt                 # Arquivo de texto com diretrizes, persona e regras para a IA
+│   ├── persona.txt                 # Instruções principais, perfil profissional e regras para a IA
+│   ├── exemplares.txt              # Exemplos de postagens e respostas ideais para Few-Shot Prompting
 │   └── commented_posts_history.json# Histórico persistente em JSON dos hashes dos posts comentados
 │
 ├── services/                       # Camada de Serviços de Negócio
