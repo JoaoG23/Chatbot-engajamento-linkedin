@@ -5,6 +5,9 @@ from playwright.async_api import Page
 from services.ollama_service import OllamaService
 from utils.text_cleaner import remove_linebreak_text
 from utils.history_manager import load_history, save_history, get_post_hash
+from utils.logger import setup_logger
+
+logger = setup_logger("LinkedInService")
 
 
 class LinkedInService:
@@ -34,7 +37,7 @@ class LinkedInService:
             )
             await asyncio.sleep(1)
         except Exception as expansion_error:
-            print(f"[LinkedInService] Aviso ao expandir texto do post {post_index + 1}: {expansion_error}")
+            logger.warning(f"Aviso ao expandir texto do post {post_index + 1}: {expansion_error}")
 
     async def extract_post_text(self, post_index: int) -> str:
         """Extrai o texto legível da postagem no feed."""
@@ -121,9 +124,11 @@ class LinkedInService:
     async def _should_skip_post(self, post_index: int, post_hash: str) -> bool:
         """Verifica se a postagem deve ser ignorada (histórico ou já comentada pelo usuário)."""
         if post_hash in self.history:
+            logger.info(f"Post {post_hash[:8]} ignorado (já está no histórico local).")
             return True
 
         if await self.has_existing_user_comment_in_dom(post_index):
+            logger.info(f"Post {post_hash[:8]} ignorado (comentário prévio detectado no DOM).")
             self._record_history(post_hash)
             return True
 
@@ -152,6 +157,7 @@ class LinkedInService:
 
         snippet_display = cleaned_post_text[:80]
         progress_bar.set_postfix_str(f"Lendo: {snippet_display}...")
+        logger.info(f"Processando post {post_hash[:8]}: {snippet_display}...")
 
         generated_comment_text = self.llm_service.generate_comment(cleaned_post_text)
 
@@ -161,11 +167,13 @@ class LinkedInService:
         is_submitted = await self.type_and_submit_comment(post_index, generated_comment_text)
 
         if not is_submitted:
+            logger.error(f"Falha ao submeter comentário no post {post_hash[:8]}.")
             await asyncio.sleep(2)
             return False
 
         self._record_history(post_hash)
         progress_bar.update(1)
+        logger.info(f"Comentário publicado no post {post_hash[:8]}: '{generated_comment_text}'")
 
         # Intervalo seguro de 7 a 10 segundos entre comentários
         random_post_delay = random.uniform(7.0, 10.0)
@@ -175,7 +183,7 @@ class LinkedInService:
 
     async def process_feed_comments(self, target_count: int = 30) -> int:
         """Processa o feed com barra de progresso (tqdm) até atingir a quantidade desejada."""
-        print(f"\n[LinkedInService] Iniciando automação para {target_count} comentários no feed...")
+        logger.info(f"Iniciando automação para {target_count} comentários no feed...")
         await self.page.keyboard.press("Home")
         await asyncio.sleep(2)
 
@@ -210,7 +218,7 @@ class LinkedInService:
             processed_element_indices.clear()
 
         progress_bar.close()
-        print(
-            f"\n=================== CONCLUÍDO: {successful_comment_count} COMENTÁRIOS PUBLICADOS ==================="
+        logger.info(
+            f"CONCLUÍDO: {successful_comment_count} COMENTÁRIOS PUBLICADOS NO FEED."
         )
         return successful_comment_count

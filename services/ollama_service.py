@@ -4,6 +4,9 @@ import ollama
 
 from config import OLLAMA_HOST, OLLAMA_MODEL, PROMPT_FILE, EXAMPLES_FILE
 from utils.text_cleaner import remove_linebreak_text, remove_emojis_text
+from utils.logger import setup_logger
+
+logger = setup_logger("OllamaService")
 
 
 class OllamaService:
@@ -50,6 +53,7 @@ class OllamaService:
     def generate_comment(self, content_post: str) -> str:
         """Gera um comentário inteligente utilizando o Ollama diretamente sem cortes no código."""
         if not content_post or not content_post.strip():
+            logger.warning("Conteúdo do post vazio. Utilizando comentário de contingência.")
             return self.get_fallback_comment()
 
         self.system_prompt = self._read_prompt()
@@ -74,18 +78,19 @@ class OllamaService:
                 },
             )
         except Exception as communication_error:
-            print(f"[OllamaService] Erro ao comunicar com Ollama ({communication_error}). Utilizando contingência.")
+            logger.error(f"Erro ao comunicar com Ollama ({communication_error}). Utilizando contingência.")
             return self.get_fallback_comment()
 
         if not response or "message" not in response or "content" not in response["message"]:
-            print("[OllamaService] Resposta inválida recebida do Ollama. Utilizando contingência.")
+            logger.error("Resposta inválida recebida do Ollama. Utilizando contingência.")
             return self.get_fallback_comment()
 
         raw_text = response["message"]["content"].strip()
         cleaned_text = remove_emojis_text(remove_linebreak_text(raw_text))
 
         if len(cleaned_text) < 10:
-            print("[OllamaService] Comentário gerado é muito curto. Utilizando contingência.")
+            logger.warning("Comentário gerado é muito curto (< 10 chars). Utilizando contingência.")
             return self.get_fallback_comment()
 
+        logger.info(f"Comentário gerado com sucesso pelo Ollama: {cleaned_text}")
         return cleaned_text

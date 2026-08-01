@@ -18,6 +18,9 @@ Chatbot-engajamento-linkedin/
 │   ├── exemplares.txt              # Exemplos de postagens e respostas ideais para Few-Shot Prompting
 │   └── commented_posts_history.json# Histórico persistente em JSON dos hashes dos posts comentados
 │
+├── logs/                           # Diretório de armazenamento de logs da aplicação
+│   └── app.log                     # Log centralizado com data, nível e módulo
+│
 ├── services/                       # Camada de Serviços de Negócio
 │   ├── __init__.py                 # Inicializador do pacote de serviços
 │   ├── browser_service.py          # Gerenciador do Navegador (Conexão CDP ou Login manual/automatizado)
@@ -126,10 +129,22 @@ Chatbot-engajamento-linkedin/
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 🚀 Como Executar o Executável e Alternar Modos de Navegação
 
-Para executar a automação completa conectada ao seu Chrome ativo:
+O sistema oferece **2 formas flexíveis de execução**:
 
-```bash
-python main.py
-```
+### Forma 1: Conectar ao Chrome Aberto (Modo CDP - Recomendado)
+Reaproveita sua sessão do Chrome com login já ativo na porta 9222.
+- No arquivo `.env`: `USE_CDP=true`
+- Via linha de comando (terminal / CMD):
+  ```cmd
+  bot-comentador-likedisney.exe --mode cdp
+  ```
+
+### Forma 2: Abrir Novo Navegador Limpo (Modo Playwright)
+Abre uma instância nova do Playwright e realiza o login automático via credenciais do `.env`.
+- No arquivo `.env`: `USE_CDP=false`
+- Via linha de comando (terminal / CMD):
+  ```cmd
+  bot-comentador-likedisney.exe --mode browser
+  ```
